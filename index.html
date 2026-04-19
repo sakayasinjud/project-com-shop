@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Computer Shop</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- 🔶 TOP BAR -->
+
+<div class="topbar">
+From Gadgets to Enterprise - ร้านขายคอมครบวงจร
+</div>
+
+
+<!-- 🔷 NAVBAR -->
+
+<div class="navbar">
+
+<h2 class="logo">💻 COMSHOP</h2>
+
+<input 
+class="search" 
+type="text"
+placeholder="ค้นหาสินค้า..."
+onkeyup="searchProduct(this.value)"
+>
+
+<div id="userBox" class="user-box">
+
+<a href="login.html"
+id="loginLink"
+class="login-btn">
+
+<span>👤</span>
+<span>Login</span>
+
+</a>
+
+<span id="userName"
+class="user-name">
+
+</span>
+
+<button 
+onclick="logout()"
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
+
+<a href="cart.html"
+class="cart-btn">
+
+🛒
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- 🔽 MENU (เมนูเดิมของคุณ) -->
+
+<div class="menu">
+
+<a href="#" onclick="filter('all'); return false;">
+สินค้าทั้งหมด
+</a>
+
+<a href="#" onclick="filter('promo'); return false;">
+โปรโมชั่น
+</a>
+
+<a href="#" onclick="filter('laptop'); return false;">
+โน๊ตบุ๊ค
+</a>
+
+<a href="#" onclick="filter('pc'); return false;">
+คอมพิวเตอร์
+</a>
+
+<a href="#" onclick="filter('pcset'); return false;">
+คอมประกอบ
+</a>
+
+<a href="#" onclick="filter('printer'); return false;">
+เครื่องพิมพ์ เครื่องสแกน หมึก
+</a>
+
+<a href="#" onclick="filter('monitor'); return false;">
+จอและโปรเจคเตอร์
+</a>
+
+<a href="#" onclick="filter('console'); return false;">
+เครื่องเกมพกพาและคอนโซล
+</a>
+
+<a href="#" onclick="filter('tablet'); return false;">
+แท็บเล็ต สมาร์ทโฟน
+</a>
+
+<a href="#" onclick="filter('accessory'); return false;">
+อุปกรณ์เสริม
+</a>
+
+<a href="#" onclick="filter('home'); return false;">
+อุปกรณ์ในบ้าน
+</a>
+
+<a href="#" onclick="filter('business'); return false;">
+ลูกค้าองค์กร
+</a>
+
+<a href="#" onclick="filter('insurance'); return false;">
+ซื้อประกันเพิ่ม
+</a>
+
+<a href="#" onclick="filter('news'); return false;">
+ห้องข่าวไอที
+</a>
+
+<a href="#" onclick="filter('sales'); return false;">
+SALES
+</a>
+
+</div>
+
+
+<!-- 🎯 MAIN -->
+
+<div class="main">
+
+<div class="sidebar">
+
+<h3>กรอง</h3>
+
+<p><b>หมวดหมู่</b></p>
+
+<button onclick="filter('all')">
+ทั้งหมด
+</button>
+
+<button onclick="filter('Mainboard')">
+Mainboard
+</button>
+
+<button onclick="filter('CPU')">
+CPU
+</button>
+
+<button onclick="filter('RAM')">
+RAM
+</button>
+
+<button onclick="filter('PowerSupply')">
+Power Supply
+</button>
+
+<button onclick="filter('GPU')">
+GPU
+</button>
+
+<button onclick="filter('Case')">
+Case
+</button>
+
+<button onclick="filter('HDD')">
+HDD
+</button>
+
+<button onclick="filter('SSD')">
+SSD
+</button>
+
+<button onclick="filter('M.2')">
+M.2
+</button>
+
+<hr>
+
+<p><b>ยี่ห้อ</b></p>
+
+<div id="brandBox">
+
+</div>
+
+<hr>
+
+<p><b>ราคา</b></p>
+
+<button onclick="cheap()">
+ต่ำกว่า 10000
+</button>
+
+</div>
+
+
+<div id="products">
+
+</div>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+<script>
+
+/* LOGIN STATUS */
+
+function checkLogin(){
+
+let isLogin =
+localStorage.getItem("isLogin");
+
+let username =
+localStorage.getItem("loginUser");
+
+
+if(isLogin === "true"){
+
+document.getElementById("loginLink").style.display =
+"none";
+
+document.getElementById("userName").innerText =
+"👋 " + username;
+
+document.getElementById("logoutBtn").style.display =
+"inline-block";
+
+}
+else{
+
+document.getElementById("logoutBtn").style.display =
+"none";
+
+}
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem("isLogin");
+
+localStorage.removeItem("loginUser");
+
+alert("ออกจากระบบแล้ว");
+
+window.location.href =
+"index.html";
+
+}
+
+
+checkLogin();
+
+</script>
+
+</body>
+
+</html>

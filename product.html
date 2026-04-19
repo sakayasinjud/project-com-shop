@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Detail</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ปุ่มกลับ */
+
+.back-btn{
+
+margin-bottom:15px;
+padding:8px 14px;
+
+background:#eee;
+border:1px solid #ccc;
+
+cursor:pointer;
+border-radius:6px;
+
+}
+
+.back-btn:hover{
+
+background:#ddd;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+From Gadgets to Enterprise - ร้านขายคอมครบวงจร
+</div>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<h2 class="logo">💻 COMSHOP</h2>
+
+<input class="search" placeholder="ค้นหาสินค้า...">
+
+<div>
+<a href="index.html">🏠</a>
+<a href="cart.html">🛒</a>
+</div>
+
+</div>
+
+<!-- PRODUCT DETAIL -->
+
+<div class="product-page">
+
+<!-- รูปสินค้า -->
+
+<div class="product-images">
+
+<img 
+id="mainImage"
+src=""
+class="main-image"
+>
+
+<div 
+class="thumbnail-row"
+id="thumbnailRow">
+
+</div>
+
+</div>
+
+<!-- รายละเอียด -->
+
+<div class="product-info">
+
+<button 
+class="back-btn"
+onclick="goHome()">
+
+← กลับหน้าหลัก
+
+</button>
+
+<h2 class="product-title">
+สินค้า
+</h2>
+
+<p 
+class="price"
+id="priceText">
+
+0 บาท
+
+</p>
+
+<hr>
+
+<!-- จำนวน -->
+
+<div class="qty-box">
+
+<button onclick="minus()">-</button>
+
+<input id="qty" value="1">
+
+<button onclick="plus()">+</button>
+
+</div>
+
+<!-- ปุ่ม -->
+
+<button 
+class="cart-btn"
+onclick="addToCart()">
+
++ เพิ่มในตะกร้า
+
+</button>
+
+<button 
+class="buy-btn"
+onclick="buyNow()">
+
+ซื้อเลย
+
+</button>
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+/* =========================
+   โหลดสินค้า
+========================= */
+
+const productData =
+JSON.parse(
+localStorage.getItem("product")
+);
+
+if(productData){
+
+/* ชื่อ */
+
+document.querySelector(".product-title").innerText =
+productData.name;
+
+/* ราคา */
+
+document.getElementById("priceText").innerText =
+productData.price.toLocaleString() + " บาท";
+
+
+/* ======================
+   รองรับหลายรูป
+====================== */
+
+let images = [];
+
+/* ถ้ามี images[] */
+
+if(productData.images){
+
+images = productData.images;
+
+}
+
+/* ถ้ามี image เดี่ยว */
+
+else if(productData.image){
+
+images = [productData.image];
+
+}
+
+
+/* ตั้งรูปหลัก */
+
+document.getElementById("mainImage").src =
+images[0];
+
+
+/* สร้าง thumbnail */
+
+const thumbRow =
+document.getElementById("thumbnailRow");
+
+thumbRow.innerHTML = "";
+
+images.forEach(img=>{
+
+thumbRow.innerHTML += `
+
+<img 
+src="${img}"
+onclick="changeImage(this)">
+
+`;
+
+});
+
+}
+
+
+/* =========================
+   กลับหน้าหลัก
+========================= */
+
+function goHome(){
+
+window.location.href =
+"index.html";
+
+}
+
+
+/* =========================
+   เปลี่ยนรูป
+========================= */
+
+function changeImage(img){
+
+document.getElementById("mainImage").src =
+img.src;
+
+}
+
+
+/* =========================
+   จำนวนสินค้า
+========================= */
+
+function plus(){
+
+let qty =
+document.getElementById("qty");
+
+qty.value =
+parseInt(qty.value) + 1;
+
+}
+
+function minus(){
+
+let qty =
+document.getElementById("qty");
+
+if(qty.value > 1){
+
+qty.value =
+parseInt(qty.value) - 1;
+
+}
+
+}
+
+
+/* =========================
+   เพิ่มลงตะกร้า
+========================= */
+
+function addToCart(){
+
+if(!productData) return;
+
+let qty =
+parseInt(
+document.getElementById("qty").value
+);
+
+let cart =
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+
+let exist =
+cart.find(
+item => item.id === productData.id
+);
+
+if(exist){
+
+exist.qty += qty;
+
+}else{
+
+cart.push({
+
+id: productData.id,
+name: productData.name,
+price: productData.price,
+image: productData.images 
+? productData.images[0]
+: productData.image,
+
+qty: qty
+
+});
+
+}
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+alert("เพิ่มลงตะกร้าแล้ว 🛒");
+
+window.location.href =
+"index.html";
+
+}
+
+
+/* =========================
+   ซื้อเลย
+========================= */
+
+function buyNow(){
+
+if(!productData) return;
+
+let qty =
+parseInt(
+document.getElementById("qty").value
+);
+
+let cart =
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+cart.push({
+
+id: productData.id,
+name: productData.name,
+price: productData.price,
+image: productData.images 
+? productData.images[0]
+: productData.image,
+
+qty: qty
+
+});
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+window.location.href =
+"cart.html";
+
+}
+
+</script>
+
+</body>
+</html>

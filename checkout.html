@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.checkout-box{
+
+max-width:600px;
+margin:40px auto;
+
+background:white;
+padding:25px;
+
+}
+
+.payment-option{
+
+border:1px solid #ddd;
+
+padding:12px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+}
+
+.payment-option:hover{
+
+border:2px solid orange;
+
+}
+
+.pay-btn{
+
+width:100%;
+
+padding:14px;
+
+background:orange;
+
+color:white;
+
+border:none;
+
+font-size:18px;
+
+margin-top:20px;
+
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+From Gadgets to Enterprise - ร้านขายคอมครบวงจร
+</div>
+
+<div class="navbar">
+
+<h2 class="logo">💻 COMSHOP</h2>
+
+<input class="search">
+
+<div>
+<a href="index.html">🏠</a>
+<a href="cart.html">🛒</a>
+</div>
+
+</div>
+
+
+<div class="checkout-box">
+
+<h2>💳 เลือกวิธีชำระเงิน</h2>
+
+<label class="payment-option">
+
+<input type="radio"
+name="pay"
+value="cod">
+
+💵 เก็บเงินปลายทาง
+
+</label>
+
+<label class="payment-option">
+
+<input type="radio"
+name="pay"
+value="promptpay">
+
+📱 PromptPay
+
+</label>
+
+<label class="payment-option">
+
+<input type="radio"
+name="pay"
+value="bank">
+
+🏦 โอนผ่านธนาคาร
+
+</label>
+
+
+<button class="pay-btn"
+onclick="confirmPayment()">
+
+ยืนยันการชำระเงิน
+
+</button>
+
+</div>
+
+
+<script>
+
+function confirmPayment(){
+
+let pay =
+document.querySelector(
+'input[name="pay"]:checked'
+);
+
+if(!pay){
+
+alert("กรุณาเลือกวิธีชำระเงิน");
+
+return;
+
+}
+
+alert("สั่งซื้อสำเร็จ 🎉");
+
+// ล้าง cart
+localStorage.removeItem("cart");
+
+// กลับหน้าแรก
+window.location.href =
+"index.html";
+
+}
+
+</script>
+
+</body>
+</html>
